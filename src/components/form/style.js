@@ -53,17 +53,21 @@ export const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  align-items:center;
+  gap:2rem;
+  justify-content:center;
 `;
 
 export const SlugInput = styled.input``
 
-export const ImageDiv=styled.div`
+export const ImageDiv = styled.div`
 height:20rem;
 margin-top:2rem;
 margin-bottom:2rem;
 `
 
-export const Img=styled.img`
+export const Img = styled.img`
 height:100%;
 width:100%;
 `
