@@ -13,8 +13,10 @@ import {
 } from "./style";
 import service from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
+import ButtonLoading from "../loading/ButtonLoading";
 
 const BlogForm = ({ post }) => {
+  const [loading, setLoading] = useState(false);
   const { handleSubmit, register, setValue, getValues, watch, formState } =
     useForm({
       defaultValues: {
@@ -27,6 +29,7 @@ const BlogForm = ({ post }) => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    setLoading(true);
     if (post) {
       const file = data.image[0]
         ? await service.uploadImage(data.image[0])
@@ -41,6 +44,7 @@ const BlogForm = ({ post }) => {
       });
       if (updatePost) {
         navigate(`/blogs/${post.$id}`);
+        setLoading(false);
       }
     } else {
       const file = await service.uploadImage(data.image[0]);
@@ -51,6 +55,7 @@ const BlogForm = ({ post }) => {
 
         if (dbPost) {
           navigate("/blogs");
+          setLoading(false);
         }
       }
     }
@@ -119,7 +124,10 @@ const BlogForm = ({ post }) => {
           <Img src={service.getFilePreview(post.featureImage)} />
         </ImageDiv>
       ) : null}
-      <Button type='submit'>{post ? "Edit" : "Post"}</Button>
+      <Button type='submit'>
+        {post ? "Edit" : "Post"}
+        {loading ? <ButtonLoading /> : null}
+      </Button>
     </FormWrapper>
   );
 };
